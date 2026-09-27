@@ -1,0 +1,11 @@
+{
+  "name": "demo-cicd-github-actions",
+  "version": "1.0.0",
+  "description": "Demo CI/CD cho báo cáo",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
