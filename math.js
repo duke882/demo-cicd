@@ -1,5 +1,4 @@
-// Tính năng cộng tiền giỏ hàng do Dev A viết
-// Test nhan email canh bao
+// AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 function calculateTotal(a, b) {
     return a + b;
 }
