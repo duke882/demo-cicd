@@ -1,25 +1,38 @@
-name: Kiem-Thu-Tu-Dong-CI
+name: He-Thong-Kiem-Thu-Doanh-Nghiep
 
-# Kích hoạt bot mỗi khi có ai đó đẩy code lên nhánh main
 on:
   push:
     branches: [ main ]
+  pull_request: # Kích hoạt quét khi có yêu cầu gộp code
+    branches: [ main ]
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest # Chạy trên máy chủ ảo của GitHub
-
+  security-scan:
+    name: 🛡️ Quét Bảo Mật (Gitleaks)
+    runs-on: ubuntu-latest
     steps:
-    - name: Tải mã nguồn về máy chủ
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: zricethezav/gitleaks-action@master
 
-    - name: Cài đặt môi trường Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+  audit-packages:
+    name: 📦 Kiểm Tra Lỗ Hổng Thư Viện
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: npm audit --audit-level=high
 
-    - name: Cài đặt thư viện (Jest)
-      run: npm install
-
-    - name: Chạy kiểm thử tự động (Unit Test)
-      run: npm test
+  unit-test:
+    name: 🧪 Kiểm Thử Chức Năng (Jest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm test -- --coverage
