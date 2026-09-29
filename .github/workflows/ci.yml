@@ -7,11 +7,14 @@ on:
     branches: [ main ]
 
 jobs:
-  security-scan:
+security-scan:
     name: 🛡️ Quét Bảo Mật (Gitleaks)
     runs-on: ubuntu-latest
     steps:
-      - run: echo "He thong an toan 100%. Khong phat hien lo lot mat khau."
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: zricethezav/gitleaks-action@master
 
   audit-packages:
     name: 📦 Kiểm Tra Lỗ Hổng Thư Viện
