@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-security-scan:
+  security-scan:
     name: 🛡️ Quét Bảo Mật (Gitleaks)
     runs-on: ubuntu-latest
     steps:
